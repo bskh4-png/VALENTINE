@@ -1,0 +1,65 @@
+<script>
+  const yesBtn = document.getElementById('yes');
+  const noBtn = document.getElementById('no');
+  let scale = 1;
+
+  // Le bouton NON s’enfuit quand on s’en approche
+  noBtn.addEventListener('mouseenter', (event) => {
+    // OUI grossit
+    scale += 0.35;
+    yesBtn.style.transform = `scale(${scale})`;
+
+    // NON se téléporte
+    const maxX = window.innerWidth - noBtn.offsetWidth;
+    const maxY = window.innerHeight - noBtn.offsetHeight;
+
+    const randomX = Math.random() * maxX;
+    const randomY = Math.random() * maxY;
+
+    noBtn.style.position = 'absolute';
+    noBtn.style.left = randomX + 'px';
+    noBtn.style.top = randomY + 'px';
+
+    // Petit cœur
+    const heart = document.createElement('div');
+    heart.className = 'heart';
+    heart.textContent = '❤️';
+    heart.style.left = (event.clientX - 20) + 'px';
+    heart.style.top = (event.clientY - 20) + 'px';
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 1200);
+
+    // Message désespéré 😅
+    if (scale > 4) {
+      yesBtn.textContent = "Dis OUI maintenant 😍";
+      yesBtn.style.fontSize = '2.8rem';
+    }
+  });
+
+  // Quand on clique OUI ❤️
+  yesBtn.addEventListener('click', () => {
+    document.body.innerHTML = `
+      <div style="
+        height:100vh;
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        justify-content:center;
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        color:white;
+        text-align:center;
+        font-size:4rem;
+        text-shadow:0 4px 15px rgba(0,0,0,0.4);
+      ">
+        <div>YAAAAAAY !!! 🎉❤️</div>
+        <div style="font-size:2.2rem; margin:40px 0;">
+          Tu es ma Valentine 💖
+        </div>
+        <div style="font-size:1.6rem; opacity:0.9;">
+          (le NON n’était qu’une illusion 😏)
+        </div>
+      </div>
+    `;
+  });
+</script>
